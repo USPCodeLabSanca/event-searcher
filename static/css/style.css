@@ -1,0 +1,67 @@
+body{
+    height: 100%;
+    width: 100%;
+}
+
+.background{
+    background-image: url(./images/background_event.jpg);
+    /* Full height */
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    height: 100%; 
+    width: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.intro{
+    font-family: Arial;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.search{
+    font-family: Arial;
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: large;
+}
+
+.back{
+    /* display: flex; */
+    text-align: center;
+    background-color: white;
+    background: rgba(255, 255, 255, .7);
+    border-radius: 10%;
+    padding: 30px; 
+}
+
+@font-face {
+    font-family: BlackSansa;
+    src: url("./fontstyle/BlackS/BlackSansaFree-Regular.otf") format("opentype");
+}
+
+h1{
+    font-family: BlackSansa;
+    font-size: 60px;
+    
+}
+
+.space{
+    content: "";
+    margin: -2em;
+    display: block;
+    font-size: 24%;
+  }
