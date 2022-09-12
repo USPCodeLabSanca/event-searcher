@@ -1,0 +1,28 @@
+body{
+    height: 100%;
+    width: 100%;
+}
+
+.background{
+    background-image: url(./images/background_event.jpg);
+    /* Full height */
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    height: 100%; 
+    width: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@font-face {
+    font-family: BlackSansa;
+    src: url("fontstyle/Black\ Sansa\ Free/BlackSansaFree-Regular.otf") format("opentype");
+}
+
+h1{
+    font-family: BlackSansa;
+}
