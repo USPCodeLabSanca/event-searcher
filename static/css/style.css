@@ -39,6 +39,11 @@ body{
     font-size: large;
 }
 
+.search:active {
+    background-color: rgba(0, 0, 0, 0.523);
+    border-color: rgba(0, 0, 0, 0.523);
+}
+
 .back{
     /* display: flex; */
     text-align: center;
