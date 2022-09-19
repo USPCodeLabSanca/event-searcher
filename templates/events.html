@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Events near you</title>
+</head>
+<body>
+    <div class="card-list">
+    </div>
+    
+    <script async src="https://get.geojs.io/v1/ip/geo.js"></script>
+    <script>
+        function createCard(info) {
+            let card = document.createElement('div')
+            card.classList.add('card')
+            let image = document.createElement('img')
+            image.src=info['image']
+            card.appendChild(image)
+            let infoDiv = document.createElement('div')
+            let name = document.createElement('p')
+            name.innerText = info['name']
+            let city = document.createElement('p')
+            city.innerText = info['city']
+            let distance = document.createElement('p')
+            distance.innerText = info['distance']
+            infoDiv.appendChild(name)
+            infoDiv.appendChild(city)
+            infoDiv.appendChild(distance)
+            card.appendChild(infoDiv)
+
+            return card
+        }
+
+        function geoip(json){
+            let latitude = json.latitude;
+            let longitude = json.longitude;
+            
+            console.log(json.latitude + " " + json.longitude)
+            
+            let events = fetch('/event', {
+                method: "POST",
+                body: JSON.stringify({
+                    latitude: latitude,
+                    longitude: longitude
+                }),
+    
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            }).then(response => {
+                // console.log(response.json())
+                return response.json()
+            }).then(json => {
+                console.log("entrou no then")
+                console.log(json)
+                let cardList = document.getElementsByClassName('card-list')[0]
+                for (let event of json) {
+                    console.log(event)
+                    let card = createCard(event)
+                    cardList.appendChild(card)
+                }
+            })
+        }
+
+    </script>
+</body>
+</html>
