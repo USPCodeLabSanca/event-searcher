@@ -21,11 +21,9 @@ def event():
         print(f'{API_KEY}')
 
         events = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?geoPoint={geoPoint}&radius={radius}&unit=km&apikey={API_KEY}')
-        print(f'https://app.ticketmaster.com/discovery/v2/events.json?geoPoint={geoPoint}&radius={radius}&unit=km&apikey={API_KEY}')
-        
+    
         events = events.json()
         if '_embedded' in events:
-            # print(events)
             events = events['_embedded']['events']
             eventsNames = [{'name': event['name'], 'image': event['images'][0]['url'], 'distance': event['distance'], 'city': event['_embedded']['venues'][0]['city']['name']} for event in events]
         else:
