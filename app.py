@@ -22,15 +22,32 @@ def event():
 
         events = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?geoPoint={geoPoint}&radius={radius}&unit=km&apikey={API_KEY}')
     
+        print(f'https://app.ticketmaster.com/discovery/v2/events.json?geoPoint={geoPoint}&radius={radius}&unit=km&apikey={API_KEY}')
         events = events.json()
         if '_embedded' in events:
             events = events['_embedded']['events']
-            eventsNames = [{'name': event['name'], 'image': event['images'][0]['url'], 'distance': event['distance'], 'city': event['_embedded']['venues'][0]['city']['name']} for event in events]
+            eventsNames = [{'name': event['name'], 'image': event['images'][0]['url'], 'distance': event['distance'], 'city': event['_embedded']['venues'][0]['city']['name'], 'date': event['dates']['start']['localDate'], 'hour': event['dates']['start']['localTime']} for event in events]
         else:
             return {'description': 'ERROR'}, 500
-        print(eventsNames)
         
-        return eventsNames, 200
+        formatedEvents = {}
+        for event in eventsNames:
+            if f"{event['name']} {event['city']}" in formatedEvents:
+                formatedEvents[f"{event['name']} {event['city']}"]["dates"].append({
+                    "hour": event['hour'],
+                    "date": event['date']
+                })
+            else:
+                formatedEvents[f"{event['name']} {event['city']}"] = {
+                    'name': event['name'],
+                    'image': event['image'],
+                    'city': event['city'],
+                    'distance': event['distance'],
+                    'dates': [{'hour': event['hour'], 'date': event['date']}]
+                }
+        print(formatedEvents)
+        
+        return formatedEvents, 200
 
 @app.route('/events')
 def events():

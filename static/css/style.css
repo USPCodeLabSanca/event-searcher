@@ -79,7 +79,8 @@ h1{
   }
 
 .card{
-    max-width: 960px;
+    width: 14em;
+    min-height: 12em;
     border-radius: 10px;
     box-shadow: 24px 24px 80px rgba(0,0,0,0.1);
     padding: 10px 20px 28px 20px;
@@ -88,10 +89,6 @@ h1{
     display: flex;
     flex-direction: column;
     background-color: rgba(255, 255, 255, 0.849);
-}
-
-img{
-    width: 150px;
 }
 
 .loader {
@@ -168,6 +165,23 @@ img{
 }
 
 .card-list {
-    background-color: #242f3f;
     padding-top: 20px;
+    display: flex;
+    flex-flow: row-reverse wrap;
+    justify-content: center;
+}
+
+main {
+    background-color: #242f3f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em 0em;
+    width: 100vw;
+    height: 100vh;
+}
+
+main h1 {
+    margin: 0;
+    color: white;
 }

@@ -9,8 +9,11 @@
     <script src="jquery-2.1.4.js"></script>
 </head>
 <body>
-    <div class="card-list">
-    </div>
+    <main>
+        <h1>Events near you</h1>
+        <div class="card-list">
+        </div>
+    </main>
     <div class="loader-wrapper" id="loader-wrapper">
         <span class="loader"><span class="loader-inner"></span></span>
     </div>
@@ -19,11 +22,13 @@
     <script>
         function addLoading() {
             let wrapper = document.getElementById('loader-wrapper')
+            wrapper.removeAtrribute('style');
             wrapper.classList.add('loader-wrapper')
         }
 
         function removeLoading() {
             let wrapper = document.getElementById('loader-wrapper')
+            wrapper.setAttribute("style", "display: none;");
             wrapper.classList.remove('loader-wrapper')
         }
 
@@ -32,6 +37,7 @@
             card.classList.add('card')
             let image = document.createElement('img')
             image.src=info['image']
+            image.classList.add('event-cover')
             card.appendChild(image)
             let infoDiv = document.createElement('div')
             let name = document.createElement('p')
@@ -67,10 +73,8 @@
                 // console.log(response.json())
                 return response.json()
             }).then(json => {
-                console.log("entrou no then")
-                console.log(json)
                 let cardList = document.getElementsByClassName('card-list')[0]
-                for (let event of json) {
+                for (let event of Object.values(json)) {
                     console.log(event)
                     let card = createCard(event)
                     cardList.appendChild(card)
