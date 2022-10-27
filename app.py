@@ -26,7 +26,7 @@ def event():
         events = events.json()
         if '_embedded' in events:
             events = events['_embedded']['events']
-            eventsNames = [{'name': event['name'], 'image': event['images'][0]['url'], 'distance': event['distance'], 'city': event['_embedded']['venues'][0]['city']['name'], 'date': event['dates']['start']['localDate'], 'hour': event['dates']['start']['localTime']} for event in events]
+            eventsNames = [{'name': event['name'], 'image': event['images'][0]['url'], 'distance': event['distance'], 'city': event['_embedded']['venues'][0]['city']['name'], 'date': event['dates']['start']['localDate'], 'hour': None} if 'localTime' not in event['dates']['start'] else {'name': event['name'], 'image': event['images'][0]['url'], 'distance': event['distance'], 'city': event['_embedded']['venues'][0]['city']['name'], 'date': event['dates']['start']['localDate'], 'hour': event['dates']['start']['localTime']} for event in events]
         else:
             return {'description': 'ERROR'}, 500
         

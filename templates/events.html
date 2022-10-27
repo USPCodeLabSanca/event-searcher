@@ -41,14 +41,18 @@
             card.appendChild(image)
             let infoDiv = document.createElement('div')
             let name = document.createElement('p')
+            name.classList.add('name')
             name.innerText = info['name']
             let city = document.createElement('p')
+            city.classList.add('city')
             city.innerText = info['city']
             let distance = document.createElement('p')
-            distance.innerText = info['distance']
+            distance.classList.add('dist')
+            distance.innerText = info['distance'] + ' Km'
             infoDiv.appendChild(name)
             infoDiv.appendChild(city)
             infoDiv.appendChild(distance)
+            infoDiv.classList.add('infoDiv')
             card.appendChild(infoDiv)
 
             return card

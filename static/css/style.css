@@ -91,6 +91,25 @@ h1{
     background-color: rgba(255, 255, 255, 0.849);
 }
 
+.name{
+  font-size: 20px;
+  margin-bottom: -10px;
+}
+
+.infoDiv{
+    font-family: Arial;
+    text-align: center;
+}
+
+.event-cover{
+    height: 40%;
+    object-fit: cover;
+}
+
+.city{
+    margin-bottom: 15%;
+}
+
 .loader {
     display: inline-block;
     width: 30px;
@@ -178,7 +197,7 @@ main {
     align-items: center;
     padding: 2em 0em;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
 }
 
 main h1 {
