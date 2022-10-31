@@ -32,7 +32,7 @@
             wrapper.classList.remove('loader-wrapper')
         }
 
-        function createCard(info) {
+        function createCard(info, i) {
             let card = document.createElement('div')
             card.classList.add('card')
             let image = document.createElement('img')
@@ -54,13 +54,8 @@
             infoDiv.appendChild(distance)
             infoDiv.classList.add('infoDiv')
             card.appendChild(infoDiv)
+            card.classList.add('event_'+i)
             return card
-        }
-
-        function teste(i){
-            let cardList = document.getElementsByClassName('infoDiv')
-            console.log(cardList[i])
-           
         }
 
         function geoip(json){
@@ -87,13 +82,10 @@
                     let card = createCard(event);
                     cardList.appendChild(card);
                 }
-                
-                let i = 0;
                 for (let event of document.getElementsByClassName('infoDiv')){
                     let a_name = event.childNodes[0];
-                    a_name.setAttribute('href', `javascript:teste(${i})`);
+                    a_name.setAttribute('href', 'eventData');
                     a_name.setAttribute("style", "text-decoration: none;");
-                    i++;
                     // console.log(event.childNodes[0].setAttribute('href', a_name));
                 }
                 Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
@@ -101,6 +93,7 @@
                 });
             })
         }
+
     </script>
 </body>
 </html>
