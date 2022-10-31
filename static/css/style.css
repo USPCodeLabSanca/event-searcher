@@ -78,19 +78,6 @@ h1{
     font-size: 24%;
   }
 
-.card{
-    width: 14em;
-    min-height: 12em;
-    border-radius: 10px;
-    box-shadow: 24px 24px 80px rgba(0,0,0,0.1);
-    padding: 10px 20px 28px 20px;
-    box-sizing: border-box;
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.849);
-}
-
 .name{
   font-size: 20px;
   margin-bottom: -10px;
@@ -183,11 +170,32 @@ h1{
     align-items: center;
 }
 
+.card{
+  width: 14em;
+  min-height: 12em;
+  max-height: 18em;
+  border-radius: 10px;
+  box-shadow: 24px 24px 80px rgba(0,0,0,0.1);
+  padding: 10px 20px 28px 20px;
+  box-sizing: border-box;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.849);
+}
+
 .card-list {
     padding-top: 20px;
     display: flex;
     flex-flow: row-reverse wrap;
     justify-content: center;
+    min-height: 100vh;
+    height: 100%;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
 }
 
 main {
