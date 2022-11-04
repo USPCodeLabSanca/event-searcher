@@ -9,17 +9,23 @@
     <!-- <script src="jquery-2.1.4.js"></script> -->
 </head>
 <body>
-    <main>
-        <h1>Events near you</h1>
-        <div class="card-list">
+    <main class="mainEventData">
+        <div id="title" style="text-align: center;">
+            <!-- <h1>Events near you</h1> -->
+        </div>
+
+        <div class="eventInfo">
+            <div id="eventCoverDiv"></div>
+            <div id="infoDiv"></div>
         </div>
     </main>
     <div class="loader-wrapper" id="loader-wrapper">
         <span class="loader"><span class="loader-inner"></span></span>
     </div>
     
-    <script async src="https://get.geojs.io/v1/ip/geo.js"></script>
+    <!-- <script async src="https://get.geojs.io/v1/ip/geo.js"></script> -->
     <script>
+        teste();
         function addLoading() {
             let wrapper = document.getElementById('loader-wrapper')
             wrapper.removeAtrribute('style');
@@ -32,66 +38,78 @@
             wrapper.classList.remove('loader-wrapper')
         }
 
-        function createCard(info, i) {
-            let card = document.createElement('div')
-            card.classList.add('card')
-            let image = document.createElement('img')
-            image.src=info['image']
-            image.classList.add('event-cover')
-            card.appendChild(image)
-            let infoDiv = document.createElement('div')
-            let name = document.createElement('a')
-            name.classList.add('name')
-            name.innerText = info['name']
-            let city = document.createElement('p')
-            city.classList.add('city')
-            city.innerText = info['city']
-            let distance = document.createElement('p')
-            distance.classList.add('dist')
-            distance.innerText = info['distance'] + ' Km'
-            infoDiv.appendChild(name)
-            infoDiv.appendChild(city)
-            infoDiv.appendChild(distance)
-            infoDiv.classList.add('infoDiv')
-            card.appendChild(infoDiv)
-            card.classList.add('event_'+i)
-            return card
+        function createCard(info) {
+            let title = document.createElement('h1');
+            let divTitle = document.getElementById('title');
+            title.innerText = info['name'];
+            divTitle.appendChild(title);
+
+            let card = document.createElement('div');
+            card.classList.add('eventDates');
+            
+            let image = document.createElement('img');
+            image.classList.add('eventCover');
+            image.src=info['image'];
+            let coverImg = document.getElementById('eventCoverDiv');
+            coverImg.appendChild(image);
+            
+            let infoDiv = document.getElementById('infoDiv');
+            let city = document.createElement('p');
+            let distance = document.createElement('p');
+            city.classList.add('eventCity');
+            city.innerText = info['city'];
+            distance.classList.add('eventDist');
+            distance.innerText = info['distance'] + ' Km';
+            infoDiv.appendChild(city);
+            infoDiv.appendChild(distance);
+            infoDiv.classList.add('eventInfoDiv');
+            card.appendChild(infoDiv);
+            
+            let infoDate = document.createElement('table');
+            infoDate.classList.add('eventHourDate');
+
+            let header = document.createElement('tr');
+            let col1 = document.createElement('th');
+            let col2 = document.createElement('th');
+            col1.innerText = 'Hour';
+            col2.innerText = 'Date';
+            header.appendChild(col2);
+            header.appendChild(col1);
+            infoDate.appendChild(header);
+
+            for(let date_i of Object.entries(info['dates'])){
+                let line = document.createElement('tr');  
+                let hour = document.createElement('td');
+                let date = document.createElement('td');
+                hour.setAttribute("align","center");
+                date.setAttribute("align","center");
+                hour.innerText = date_i[1]['hour'];
+                date.innerText = date_i[1]['date'];
+                line.appendChild(date);
+                line.appendChild(hour);
+                infoDate.appendChild(line);
+            }
+            card.appendChild(infoDate);
+            
+            return card;
         }
 
-        function geoip(json){
-            let latitude = json.latitude;
-            let longitude = json.longitude;
+        function teste(){
+            let cardList = document.getElementsByClassName('eventInfo')[0]
+
+
+            const pathName = window.location.pathname;
+            const idCard = pathName[pathName.length - 1];
+
+            var retrievedObject = JSON.parse(localStorage.getItem('events'));
+            var dates = []
             
-            console.log(json.latitude + " " + json.longitude)
-            let events = fetch('/event', {
-                method: "POST",
-                body: JSON.stringify({
-                    latitude: latitude,
-                    longitude: longitude
-                }),
-    
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            }).then(response => {
-                // console.log(response.json())
-                return response.json()
-            }).then(json => {
-                let cardList = document.getElementsByClassName('card-list')[0]
-                for (let event of Object.values(json)) {
-                    let card = createCard(event);
-                    cardList.appendChild(card);
-                }
-                for (let event of document.getElementsByClassName('infoDiv')){
-                    let a_name = event.childNodes[0];
-                    a_name.setAttribute('href', 'eventData');
-                    a_name.setAttribute("style", "text-decoration: none;");
-                    // console.log(event.childNodes[0].setAttribute('href', a_name));
-                }
-                Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
-                    removeLoading();
-                });
-            })
+            let card = createCard(retrievedObject[idCard]);
+            cardList.appendChild(card);
+            
+            Promise.all(Array.from(retrievedObject)).then(() => {
+                removeLoading();
+            });
         }
 
     </script>
