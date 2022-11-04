@@ -9,9 +9,17 @@ app  = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/eventData', methods=['GET', 'POST'])
-def eventData():
+@app.route('/eventsData', methods=['GET', 'POST'])
+def eventsData():
+    if request.method == 'POST':
+        data = request.get_json()
+        print(data)
+        return data
+
+@app.route('/eventData/<numEvent>')
+def eventData(numEvent):
     return render_template('eventData.html')
+
 
 @app.route('/event', methods=['GET', 'POST'])
 def event():
@@ -77,7 +85,6 @@ def event():
 @app.route('/events')
 def events():
     return render_template('events.html',)
-
 
 if __name__ == "__main__":
     app.run(debug=True)

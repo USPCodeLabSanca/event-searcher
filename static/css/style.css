@@ -91,6 +91,7 @@ h1{
 .event-cover{
     height: 40%;
     object-fit: cover;
+    margin-bottom: 10px;
 }
 
 .city{
@@ -173,7 +174,7 @@ h1{
 .card{
   width: 14em;
   min-height: 12em;
-  max-height: 18em;
+  max-height: 19em;
   border-radius: 10px;
   box-shadow: 24px 24px 80px rgba(0,0,0,0.1);
   padding: 10px 20px 28px 20px;
@@ -187,7 +188,7 @@ h1{
 .card-list {
     padding-top: 20px;
     display: flex;
-    flex-flow: row-reverse wrap;
+    flex-flow: wrap;
     justify-content: center;
     min-height: 100vh;
     height: 100%;
@@ -211,4 +212,53 @@ main {
 main h1 {
     margin: 0;
     color: white;
+}
+
+.eventDates{
+  width: 18em;
+  /* width: 50%; */
+  min-height: 12em;
+  max-height: 50em;
+  border-radius: 10px;
+  box-shadow: 24px 24px 80px rgba(0,0,0,0.1);
+  /* padding: 10px 20px 28px 20px; */
+  box-sizing: border-box;
+  /* margin: 20px; */
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.849);
+}
+
+.eventName{
+  font-size: 20px;
+  margin-bottom: -10px;
+}
+
+.eventInfoDiv{
+    font-family: Arial;
+    text-align: center;
+    width: 50%;
+}
+
+#eventCoverDiv, .eventDates {
+  width: 50%;
+  margin: 10px;
+}
+
+.eventCover{
+    height: 80%;
+    width: 100%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.eventCity{
+    margin-bottom: 15%;
+}
+
+.mainEventData{
+  align-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: normal;
 }

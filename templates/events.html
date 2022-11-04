@@ -58,16 +58,25 @@
         }
 
         function teste(i){
-            let cardList = document.getElementsByClassName('infoDiv')
-            console.log(cardList[i])
-           
+            let events = fetch(`/eventsData?` + new URLSearchParams({ index: i }), {
+                method: "POST",
+                body: JSON.stringify({
+                    index: i
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            }).then(response => {
+                // console.log(response.json())
+                return response.json()
+            })
         }
 
         function geoip(json){
             let latitude = json.latitude;
             let longitude = json.longitude;
             
-            console.log(json.latitude + " " + json.longitude)
+            console.log(json.latitude + " " + json.longitude);
             let events = fetch('/event', {
                 method: "POST",
                 body: JSON.stringify({
@@ -83,7 +92,10 @@
                 return response.json()
             }).then(json => {
                 let cardList = document.getElementsByClassName('card-list')[0]
-                for (let event of Object.values(json)) {
+                let events = Object.values(json);
+                localStorage.setItem('events', JSON.stringify(events));
+                // var retrievedObject = localStorage.getItem('events');
+                for (let event of events) {
                     let card = createCard(event);
                     cardList.appendChild(card);
                 }
@@ -91,11 +103,12 @@
                 let i = 0;
                 for (let event of document.getElementsByClassName('infoDiv')){
                     let a_name = event.childNodes[0];
-                    a_name.setAttribute('href', `javascript:teste(${i})`);
+                    a_name.setAttribute('href', `/eventData/${i}`);
                     a_name.setAttribute("style", "text-decoration: none;");
                     i++;
-                    // console.log(event.childNodes[0].setAttribute('href', a_name));
+                    event.childNodes[0].setAttribute('href', a_name);
                 }
+                
                 Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
                     removeLoading();
                 });
