@@ -67,8 +67,7 @@ body{
 
 h1{
     font-family: BlackSansa;
-    font-size: 60px;
-    
+    font-size: 70px;
 }
 
 .space{
@@ -86,6 +85,7 @@ h1{
 .infoDiv{
     font-family: Arial;
     text-align: center;
+
 }
 
 .event-cover{
@@ -163,8 +163,10 @@ h1{
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 0;
-    left: 0;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
     background-color: #242f3f;
     display: flex;
     justify-content: center;
@@ -194,7 +196,7 @@ h1{
     height: 100%;
 }
 
-html, body {
+html{
   margin: 0;
   padding: 0;
 }
@@ -237,28 +239,153 @@ main h1 {
 .eventInfoDiv{
     font-family: Arial;
     text-align: center;
-    width: 50%;
+    padding-top: 10%;
+    /* width: 50%; */
+    /* height: 100%;  */
+    margin-bottom: 15px;
 }
 
-#eventCoverDiv, .eventDates {
-  width: 50%;
-  margin: 10px;
+.eventInfo{
+  display: flex;
 }
 
-.eventCover{
-    height: 80%;
+.eventCoverDiv{
+  /* display: flex; */
+  /* flex-direction: column; */
+  height: 400px;
+  width: 60%;
+  margin: 10px 150px 0px 0px;
+  top: 50px;
+  position: sticky;
+}
+
+.eventDates {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: fit-content;
+    margin: 10px 10px 0px 150px;
+  }
+  
+  .eventCover{
+    height: 100%;
     width: 100%;
     object-fit: cover;
+    border-radius: 10px;
     margin-bottom: 10px;
+  }
+
+  .eventTitle{
+      margin: 0px 20px 20px 20px;
+  }
+  
+.eventCity{
+    margin-top: 0px;
+    font-size: 60px;
+    margin: 0px 10px 5px 10px;
 }
 
-.eventCity{
-    margin-bottom: 15%;
+.eventClass{
+    margin: 0 auto;
+    font-family: arial;
+    color: white;
+    font-size: 20px;
+    background-color: #242f3f;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.eventDist{
+    font-size: 20px;
 }
 
 .mainEventData{
   align-content: flex-start;
+  background-color: #242f3f;
   display: flex;
   flex-direction: column;
   align-items: normal;
+  padding: 2em 0em;
+  width: 100vw;
+  height: 100%;
+  min-height: 100vh;
+}
+
+a:link {
+  color: black;
+}
+a:visited {
+  color: black;
+}
+a:hover {
+  color: gray;
+}
+a:active {
+  color: #242f3f;
+}
+
+.line{
+    display: flex;
+    width: 90%;
+    padding: 10px;
+    margin: 5px 5px 10px 10px;
+    background-color: #9B9B9B;
+    align-content: space-between;
+}
+
+.day{
+    background-color: white;
+    font-family: arial;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    font-size: 40px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.month{
+    display: flex;
+    flex-direction: column;
+    font-family: arial;
+    margin: 5px 20px 5px 5px;
+    font-size: 20px;
+  }
+  
+.hour{
+    float: right;
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-family: arial;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    font-size: 20px;
+}
+
+.scroll {
+  /* margin: 4px, 4px;
+  padding: 4px; */
+  overflow-x: hidden;
+  overflow-y: auto;
+  white-space: nowrap;
+  max-height: 10%;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 20px;
+}
+
+.scroll::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.scroll::-webkit-scrollbar-thumb{
+  background-color: black;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
 }

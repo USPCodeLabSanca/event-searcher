@@ -15,8 +15,8 @@
         </div>
 
         <div class="eventInfo">
-            <div id="eventCoverDiv"></div>
-            <div id="infoDiv"></div>
+            <div id='infoDiv'></div>
+            <!-- <div id="eventCoverDiv"></div> -->
         </div>
     </main>
     <div class="loader-wrapper" id="loader-wrapper">
@@ -38,74 +38,122 @@
             wrapper.classList.remove('loader-wrapper')
         }
 
+        function getMonthName(monthNumber) {
+            const date = new Date();
+            date.setMonth(monthNumber - 1);
+            return date.toLocaleString('en-US', { month: 'long' });
+        }
+
         function createCard(info) {
             let title = document.createElement('h1');
+            title.classList.add("eventTitle")
             let divTitle = document.getElementById('title');
             title.innerText = info['name'];
             divTitle.appendChild(title);
 
             let card = document.createElement('div');
-            card.classList.add('eventDates');
+            card.classList.add('eventDates');   
             
-            let image = document.createElement('img');
-            image.classList.add('eventCover');
-            image.src=info['image'];
-            let coverImg = document.getElementById('eventCoverDiv');
-            coverImg.appendChild(image);
+            let classification = document.createElement('p');
+            classification.innerText = info['class'].toUpperCase();
+            classification.classList.add('eventClass');
+
             
             let infoDiv = document.getElementById('infoDiv');
             let city = document.createElement('p');
             let distance = document.createElement('p');
             city.classList.add('eventCity');
-            city.innerText = info['city'];
+            city.innerText = 'City: ' + info['city'];
             distance.classList.add('eventDist');
-            distance.innerText = info['distance'] + ' Km';
+            distance.innerText = 'Distance: ' + info['distance'] + ' Km';
             infoDiv.appendChild(city);
             infoDiv.appendChild(distance);
             infoDiv.classList.add('eventInfoDiv');
+            infoDiv.appendChild(classification);
             card.appendChild(infoDiv);
             
-            let infoDate = document.createElement('table');
-            infoDate.classList.add('eventHourDate');
-
-            let header = document.createElement('tr');
-            let col1 = document.createElement('th');
-            let col2 = document.createElement('th');
-            col1.innerText = 'Hour';
-            col2.innerText = 'Date';
-            header.appendChild(col2);
-            header.appendChild(col1);
-            infoDate.appendChild(header);
-
+            let infoDate = document.createElement('div');
+            infoDate.classList.add('scroll');
+            
+            // let header = document.createElement('tr');
+            // let col1 = document.createElement('th');
+            // let col2 = document.createElement('th');
+            // col1.innerText = 'Hour';
+            // col2.innerText = 'Date';
+            // header.appendChild(col2);
+            // header.appendChild(col1);
+            // infoDate.appendChild(header);
+            
             for(let date_i of Object.entries(info['dates'])){
-                let line = document.createElement('tr');  
-                let hour = document.createElement('td');
-                let date = document.createElement('td');
-                hour.setAttribute("align","center");
-                date.setAttribute("align","center");
-                hour.innerText = date_i[1]['hour'];
-                date.innerText = date_i[1]['date'];
-                line.appendChild(date);
+                let line = document.createElement("div");
+                line.classList.add("line");
+                
+                let day = document.createElement("div");
+                day.classList.add("day");
+                
+                // console.log(date_i);
+                let hour_string;
+                if(date_i[1]['hour'].toString() == "0"){
+                    hour_string = "All day";
+                }else{
+                    hour_string = date_i[1]['hour'].split(":");
+                    hour_string = hour_string[0] + "h" + hour_string[1];
+                }
+                let date_string = date_i[1]['date'].split("-");
+                day.innerText = date_string[2];
+                
+                let month = document.createElement("div");
+                month.classList.add("month");
+                let month_name = getMonthName(date_string[1]) + "\n" + date_string[0];
+                month.innerText = month_name;
+                
+                let hour = document.createElement("div");
+                hour.innerText = hour_string;
+                hour.classList.add("hour");
+
+                line.appendChild(day);
+                line.appendChild(month);
                 line.appendChild(hour);
+
+                // let line = document.createElement('tr');  
+                // let hour = document.createElement('td');
+                // let date = document.createElement('td');
+
+                // line.appendChild(date);
+                // date.classList.add("date");
+                // line.appendChild(hour);
+                // hour.classList.add("hour");
                 infoDate.appendChild(line);
             }
             card.appendChild(infoDate);
-            
-            return card;
+
+
+            let card_img = document.createElement('div');
+            card_img.classList.add('eventCoverDiv');   
+
+            let image = document.createElement('img');
+            image.classList.add('eventCover');
+            image.src=info['image'];
+            card_img.appendChild(image);
+
+            let cards = [];
+            cards.push(card);
+            cards.push(card_img);
+            return cards;  
         }
 
         function teste(){
             let cardList = document.getElementsByClassName('eventInfo')[0]
 
-
             const pathName = window.location.pathname;
-            const idCard = pathName[pathName.length - 1];
-
+            const idCard = pathName.split('/')[2];
+           
             var retrievedObject = JSON.parse(localStorage.getItem('events'));
             var dates = []
             
             let card = createCard(retrievedObject[idCard]);
-            cardList.appendChild(card);
+            cardList.appendChild(card[0]);
+            cardList.appendChild(card[1]);
             
             Promise.all(Array.from(retrievedObject)).then(() => {
                 removeLoading();

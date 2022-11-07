@@ -39,6 +39,7 @@ def event():
         if '_embedded' in events:
             events = events['_embedded']['events']
             for event in events:
+
                 data = {}
                 try:   data['name'] = event['name']
                 except: data['name'] = None
@@ -58,6 +59,9 @@ def event():
                 try:    data['hour'] = event['dates']['start']['localTime']
                 except: data['hour'] = 0
                 
+                try: data['classif'] = event['classifications'][0]['segment']['name']
+                except: data['classif'] = None
+
                 eventsNames.append(data)
             #eventsNames = [{'name': event['name'], 'image': event['images'][0]['url'], 'distance': event['distance'], 'city': event['_embedded']['venues'][0]['city']['name'], 'date': event['dates']['start']['localDate'], 'hour': None} if 'localTime' not in event['dates']['start'] else {'name': event['name'], 'image': event['images'][0]['url'], 'distance': event['distance'], 'city': event['_embedded']['venues'][0]['city']['name'], 'date': event['dates']['start']['localDate'], 'hour': event['dates']['start']['localTime']} for event in events]  
         else:
@@ -76,9 +80,10 @@ def event():
                     'image': event['image'],
                     'city': event['city'],
                     'distance': event['distance'],
-                    'dates': [{'hour': event['hour'], 'date': event['date']}]
+                    'dates': [{'hour': event['hour'], 'date': event['date']}],
+                    'class': event['classif']
                 }
-        print(formatedEvents)
+        #print(formatedEvents)
         
         return formatedEvents, 200
 
